@@ -1,0 +1,46 @@
+# Ignore Node.js related files and directories
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore built output
+dist/
+build/
+out/
+*.js
+*.js.map
+
+# Ignore log files and other generated files
+*.log
+*.pid
+*.lock
+*.swp
+*.out
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+.env.*.production
+.env.production
+*.env.local
+
+# Ignore IDE and editor specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# Ignore macOS-specific files
+.DS_Store
+
+# Ignore cache and temporary files
+*.cache
+*.log*
+*.tmp
+
+# Ignore test coverage
+coverage/
+
+# Ignore any sensitive or user-specific information (example: API keys)
+secrets.json
