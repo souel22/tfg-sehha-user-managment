@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sehha-user-management
+  namespace: sehha-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sehha-user-management
+  template:
+    metadata:
+      labels:
+        app: sehha-user-management
+    spec:
+      containers:
+      - name: sehha-user-management
+        image: sulmaimech/sehha-user-management:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: AUTH_PORT
+          value: "8080"
+        - name: AUTH_DATABASE
+          value: "mongodb+srv://sehha-appointment:<password>@sehha-appointment-clust.0i73oe0.mongodb.net/authentication?retryWrites=true&w=majority&appName=sehha-appointment-cluster"
+        - name: AUTH_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sehha-secrets
+              key: AUTH_DATABASE_PASSWORD
+        - name: AUTH_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sehha-secrets
+              key: AUTH_SECRET
+        - name: AUTH_BASEPATH
+          value: "/api/v1/auth"
+        - name: PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: sehha-secrets
+              key: PRIVATE_KEY
+        - name: PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: sehha-secrets
+              key: PUBLIC_KEY
+        - name: PASSPHRASE
+          valueFrom:
+            secretKeyRef:
+              name: sehha-secrets
+              key: PASSPHRASE
+        - name: EXP
+          value: "1d"
+        - name: CLOUDAMQP_URL
+          valueFrom:
+            secretKeyRef:
+              name: sehha-secrets
+              key: CLOUDAMQP_URL
+        - name: CORS_URL
+          value: "http://aa317d99c15c24893bd6e1cb69e91c0d-84185983.eu-west-2.elb.amazonaws.com"

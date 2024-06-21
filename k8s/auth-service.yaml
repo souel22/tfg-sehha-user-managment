@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sehha-user-management-service
+  namespace: sehha-app
+spec:
+  selector:
+    app: sehha-user-management
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
