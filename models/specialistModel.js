@@ -26,7 +26,7 @@ const specialistSchema = new Schema({
     type: String,
     required: true
   },
-  specialities:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Speciality' }]
+  specialities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Speciality' }]
 });
 
 // static signup method
@@ -52,6 +52,9 @@ specialistSchema.statics.signup = async function(email, password, firstName, las
 
   const specialist = await this.create({ email, password: hash, firstName, lastName, phone, specialities });
 
+  // Populate specialities
+  await specialist.populate('specialities').execPopulate();
+
   return specialist;
 }
 
@@ -61,7 +64,7 @@ specialistSchema.statics.login = async function(email, password) {
     throw Error('All fields must be filled');
   }
 
-  const specialist = await this.findOne({ email });
+  const specialist = await this.findOne({ email }).populate('specialities');
   if (!specialist) {
     throw Error('Incorrect email');
   }
