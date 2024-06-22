@@ -60,7 +60,7 @@ const signupSpecialist = async (req, res) => {
       specialities: specialist.specialities
     }
 
-    res.status(200).json({ token, user: specialistData });
+    res.status(200).json({ token, specialist: specialistData });
     const channel = await getChannel();
     channel.assertQueue('specialist_created');
     channel.sendToQueue('specialist_created', Buffer.from(JSON.stringify(specialistData)));

@@ -50,10 +50,11 @@ specialistSchema.statics.signup = async function(email, password, firstName, las
 
   const hash = await argon2.hash(password);
 
-  const specialist = await this.create({ email, password: hash, firstName, lastName, phone, specialities });
+  await this.create({ email, password: hash, firstName, lastName, phone, specialities });
 
   // Populate specialities
-  await specialist.populate('specialities').execPopulate();
+  const specialist = await this.findOne({ email }).populate('specialities');
+
 
   return specialist;
 }
